@@ -10,8 +10,10 @@ import UIKit
 import CoreBluetooth
 
 
-class ViewController: UIViewController, CBPeripheralManagerDelegate, CBCentralManagerDelegate,CBPeripheralDelegate {
+class ViewController: UIViewController, CBPeripheralManagerDelegate, CBCentralManagerDelegate,CBPeripheralDelegate,UITextFieldDelegate {
 
+    
+    
     // MARK: - Globals
     
     // Core Bluetooth Peripheral Stuff
@@ -49,6 +51,10 @@ class ViewController: UIViewController, CBPeripheralManagerDelegate, CBCentralMa
         advertiseNewName(myTextField.text)
 
     }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool
+    { myTextField.resignFirstResponder()
+    return false}
     
     @IBAction func refreshPressed(sender: UIButton) {
         myCentralManager.stopScan()
@@ -316,7 +322,7 @@ class ViewController: UIViewController, CBPeripheralManagerDelegate, CBCentralMa
         
         if let localNameKey: AnyObject = advertisementData[CBAdvertisementDataLocalNameKey]  {
             
-            myNameString = localNameKey as! String
+            myNameString = localNameKey as String
             var myTuple = (myUUIDString, myRSSIString, "\(myNameString)", "\(myMessageString)" )
             
             if myNameString!.hasPrefix(prefixString) || myNameString!.hasPrefix("GC") {
@@ -396,7 +402,7 @@ class ViewController: UIViewController, CBPeripheralManagerDelegate, CBCentralMa
         
         if (indexPath.section == 0) {
             // Configure the cell...
-            let cell = tableView.dequeueReusableCellWithIdentifier("chatCell", forIndexPath: indexPath) as! UITableViewCell
+            let cell = tableView.dequeueReusableCellWithIdentifier("chatCell", forIndexPath: indexPath) as UITableViewCell
             cell.textLabel?.text = "\(cleanAndSortedChatArray[indexPath.row].2)"
             cell.detailTextLabel?.text = cleanAndSortedChatArray[indexPath.row].1
             
@@ -405,7 +411,7 @@ class ViewController: UIViewController, CBPeripheralManagerDelegate, CBCentralMa
         } else {
             
             // Configure the cell...
-            let cell = tableView.dequeueReusableCellWithIdentifier("backgroundCell", forIndexPath: indexPath) as! UITableViewCell
+            let cell = tableView.dequeueReusableCellWithIdentifier("backgroundCell", forIndexPath: indexPath) as UITableViewCell
             cell.textLabel?.text = "\(cleanAndSortedArray[indexPath.row].1)" + "  \(cleanAndSortedArray[indexPath.row].2)"
             cell.detailTextLabel?.text = cleanAndSortedArray[indexPath.row].3
             
